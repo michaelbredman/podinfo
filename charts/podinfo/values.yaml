@@ -6,10 +6,10 @@ host: #0.0.0.0
 backend: #http://backend-podinfo:9898/echo
 backends: []
 
-image:
-  repository: ghcr.io/stefanprodan/podinfo
-  tag: 6.5.3
-  pullPolicy: IfNotPresent
+#image:
+#  repository: ghcr.io/stefanprodan/podinfo
+#  tag: 6.5.3
+#  pullPolicy: IfNotPresent
 
 image:
   repository: mredman/podinfo
