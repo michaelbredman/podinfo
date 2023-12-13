@@ -11,6 +11,11 @@ image:
   tag: 6.5.3
   pullPolicy: IfNotPresent
 
+image:
+  repository: mredman/podinfo
+  tag: latest
+  pullPolicy: IfNotPresent
+
 ui:
   color: "#34577c"
   message: ""
