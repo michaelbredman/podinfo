@@ -1,18 +1,13 @@
 FROM golang:1.21-alpine as builder
 
-ARG REVISION
-
 RUN mkdir -p /podinfo/
 
 WORKDIR /podinfo
 
 COPY . .
-COPY --from=builder /podinfo/bin/podinfo .
-COPY --from=builder /podinfo/bin/podcli /usr/local/bin/podcli
-COPY ./ui ./ui
 
 RUN go mod download
-
+ARG REVISION
 RUN CGO_ENABLED=0 go build -ldflags "-s -w \
     -X github.com/stefanprodan/podinfo/pkg/version.REVISION=${REVISION}" \
     -a -o bin/podinfo cmd/podinfo/*
@@ -36,9 +31,9 @@ RUN addgroup -S app \
 
 WORKDIR /home/app
 
-#COPY --from=builder /podinfo/bin/podinfo .
-#COPY --from=builder /podinfo/bin/podcli /usr/local/bin/podcli
-#COPY ./ui ./ui
+COPY --from=builder /podinfo/bin/podinfo .
+COPY --from=builder /podinfo/bin/podcli /usr/local/bin/podcli
+COPY ./ui ./ui
 RUN chown -R app:app ./
 
 USER app
