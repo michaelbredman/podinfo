@@ -7,6 +7,9 @@ RUN mkdir -p /podinfo/
 WORKDIR /podinfo
 
 COPY . .
+COPY --from=builder /podinfo/bin/podinfo .
+COPY --from=builder /podinfo/bin/podcli /usr/local/bin/podcli
+COPY ./ui ./ui
 
 RUN go mod download
 
@@ -33,9 +36,9 @@ RUN addgroup -S app \
 
 WORKDIR /home/app
 
-COPY --from=builder /podinfo/bin/podinfo .
-COPY --from=builder /podinfo/bin/podcli /usr/local/bin/podcli
-COPY ./ui ./ui
+#COPY --from=builder /podinfo/bin/podinfo .
+#COPY --from=builder /podinfo/bin/podcli /usr/local/bin/podcli
+#COPY ./ui ./ui
 RUN chown -R app:app ./
 
 USER app
