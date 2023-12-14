@@ -62,5 +62,11 @@ template:
             - AllErrors
           action:
             type: StageRollback
+    variables:
+      - name: var1
+        type: String
+        description: ""
+        required: false
+        value: var1
   identifier: deploytemplate
   versionLabel: version1
