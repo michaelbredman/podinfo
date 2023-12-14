@@ -23,7 +23,7 @@ pipeline:
                     source:
                       type: Inline
                       spec:
-                        script: echo "remote"
+                        script: echo "this is a change in git"
                     environmentVariables: []
                     outputVariables: []
                   timeout: 10m
