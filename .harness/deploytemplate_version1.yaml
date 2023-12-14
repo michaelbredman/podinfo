@@ -37,6 +37,20 @@ template:
               when:
                 stageStatus: Success
                 condition: <+env.type> == "Production"
+          - step:
+              type: ShellScript
+              name: ShellScript_2
+              identifier: ShellScript_2
+              spec:
+                shell: Bash
+                onDelegate: true
+                source:
+                  type: Inline
+                  spec:
+                    script: echo <+stage.variables.var1>
+                environmentVariables: []
+                outputVariables: []
+              timeout: 10m
         rollbackSteps:
           - step:
               name: Helm Rollback
