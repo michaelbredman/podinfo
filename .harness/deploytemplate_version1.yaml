@@ -1,0 +1,66 @@
+template:
+  name: deploytemplate
+  type: Stage
+  projectIdentifier: michael_redman
+  orgIdentifier: December_2023
+  spec:
+    type: Deployment
+    spec:
+      deploymentType: NativeHelm
+      service:
+        serviceRef: podinfohelm
+      execution:
+        steps:
+          - step:
+              name: Helm Deployment
+              identifier: helmDeployment
+              type: HelmDeploy
+              timeout: 10m
+              spec:
+                skipDryRun: false
+          - step:
+              type: ShellScript
+              name: ShellScript
+              identifier: ShellScript
+              spec:
+                shell: Bash
+                onDelegate: true
+                source:
+                  type: Inline
+                  spec:
+                    script: |-
+                      echo "This is working"
+                      echo <+artifact.image>
+                environmentVariables: []
+                outputVariables: []
+              timeout: 10m
+              when:
+                stageStatus: Success
+                condition: <+env.type> == "Production"
+        rollbackSteps:
+          - step:
+              name: Helm Rollback
+              identifier: helmRollback
+              type: HelmRollback
+              timeout: 10m
+              spec: {}
+      environments:
+        metadata:
+          parallel: true
+        values:
+          - environmentRef: redmandev
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: dev
+          - environmentRef: redmanprod
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: prod
+    failureStrategies:
+      - onFailure:
+          errors:
+            - AllErrors
+          action:
+            type: StageRollback
+  identifier: deploytemplate
+  versionLabel: version1
