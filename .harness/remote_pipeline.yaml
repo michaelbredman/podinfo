@@ -1,5 +1,5 @@
 pipeline:
-  name: remote pipeline
+  name: GitX1
   identifier: remote_pipeline
   projectIdentifier: michael_redman
   orgIdentifier: December_2023
